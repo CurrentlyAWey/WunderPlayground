@@ -1,14 +1,38 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script>
-      $.getJSON("http://cooper-union-weather-proxy.herokuapp.com/weather/NY/Manhattan", function(response){
-        console.log(response);
-      });
-	console.log(response.current_observation.UV);
-    </script>
-  </head>
-  <body>
-  </body>
+	<head>
+		<title>But what does it feel like?</title>
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<script>
+			var info = {};
+			info.key="";
+			info.city = prompt("Enter your city","Manhattan");
+			info.state = prompt("Enter your state initials", "NY");
+			info.request = "http://cooper-union-weather-proxy.herokuapp.com/weather/"+info.state+"/"+info.city;
+			console.log(info);
+			$.getJSON(info.request, function(response){
+				console.log(response);
+     			 });
+			function getWeather() {
+				$.ajax({
+				type: 'GET',
+				dataType: 'json',
+				url: info.conditions,
+				success: function(response){
+					console.log(response);
+					}
+				});
+			}
+		</script>
+	</head>
+	<body>
+		<div id="info"><button type="info" onclick="getWeather()">Tell me!</button></div>
+		<div id="feel" style="visibility: hidden;"><button type="info" onclick="getFeels()">But what does it feel like?</button></div>
+
+		
+</script>
+	</body>
+
 </html>
+
+
