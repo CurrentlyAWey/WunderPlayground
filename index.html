@@ -1,1 +1,13 @@
-My Page
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+      $.getJSON("http://cooper-union-weather-proxy.herokuapp.com/weather/NY/Manhattan", function(response){
+        console.log(response);
+      });
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
