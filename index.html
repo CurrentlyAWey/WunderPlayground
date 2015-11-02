@@ -15,6 +15,25 @@
 				console.log(response);
 				$("#location").html(response.current_observation.display_location.full);
 				$("#feelslike").append(" "+response.current_observation.feelslike_f+" " + "degrees Farenheit");
+				var clothing;
+				var rain=0;
+				if (parseInt(response.current_observation.precip_today_in) > 0)
+					rain=1;
+				else if (parseInt(response.current_observation.feelslike_f) > 85)
+					clothing="tank top or a sundress";
+				else if (parseInt(response.current_observation.feelslike_f) > 75)
+					clothing="short sleeves";
+				else if (parseInt(response.current_observation.feelslike_f) > 55)
+					clothing="pants and a windbreaker maybe";
+				else if (parseInt(response.current_observation.feelslike_f) > 35)
+					clothing="warm jacket";
+				else
+					clothing="snow jacket";
+				var str = "I would suggest wearing "+clothing +" ";
+				if (rain===1)
+					str += "and a rain jacket or umbrella";
+				$("#clothes").html(str);
+				
      			 });
 			function getWeather() {
 				$.ajax({
@@ -32,6 +51,7 @@
 	<body>
 <p>Displaying results for <span id="location"></span></p>
 <h2 id="feelslike"> It should feel like</h2>
+<h3 id="clothes"> </h3>
 	</body>
 
 </html>
