@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>But what does it feel like?</title>
+		<title>Testing</title>
 		<script src="http://code.jquery.com/jquery-latest.js"></script>
 		<script>
+//Thinking about making divs colored in ways to represent light level, cloudiness, etc.
 			var info = {};
 			info.key="";
 			info.city = prompt("Enter your city","Manhattan");
@@ -12,6 +13,8 @@
 			console.log(info);
 			$.getJSON(info.request, function(response){
 				console.log(response);
+				$("#location").html(response.current_observation.display_location.full);
+				$("#feelslike").append(" "+response.current_observation.feelslike_f+" " + "degrees Farenheit");
      			 });
 			function getWeather() {
 				$.ajax({
@@ -23,14 +26,12 @@
 					}
 				});
 			}
+			
 		</script>
 	</head>
 	<body>
-		<div id="info"><button type="info" onclick="getWeather()">Tell me!</button></div>
-		<div id="feel" style="visibility: hidden;"><button type="info" onclick="getFeels()">But what does it feel like?</button></div>
-
-		
-</script>
+<p>Displaying results for <span id="location"></span></p>
+<h2 id="feelslike"> It should feel like</h2>
 	</body>
 
 </html>
