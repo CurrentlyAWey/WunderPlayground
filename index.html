@@ -11,7 +11,7 @@
 				console.log(response);
 				
 				for(var i = 0; i < response.statuses.length; i++){
-					var textParse = response.statuses[i].text.split(/[ :]);
+					var textParse = response.statuses[i].text.split(/[ :]/);
 					var flag = false;
 					for (var j = 0; j<textParse.length; j++){
 						if (textParse[j] === "https" || textParse[j] === "http" || textParse[j] === "RT"){
