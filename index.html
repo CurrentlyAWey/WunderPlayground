@@ -5,7 +5,13 @@
 		<script src="http://code.jquery.com/jquery-latest.js"></script>
 		<script>
 			var info = {};
-			info.request = "http://cooper-union-search-proxy.herokuapp.com/twitter/search/kanye%20west?count=100";
+			info.query = prompt("Please enter a search query","search");
+			info.parse = info.query.split(" ");
+			info.request = "http://cooper-union-search-proxy.herokuapp.com/twitter/search/";
+			for(var i =0; i< info.parse.length;  i++){
+				info.request += (info.parse[i] + "%20");
+			}
+			info.request = info.request.substr(0,info.request.length-3) + "?count=100";
 			console.log(info);
 			$.getJSON(info.request, function(response){
 				console.log(response);
@@ -13,7 +19,7 @@
 				for(var i = 0; i < response.statuses.length; i++){
 					var textParse = response.statuses[i].text.split(/[ :]/);
 					var flag = false;
-					for (var j = 0; j<textParse.length; j++){
+					for (var j = 0; j < textParse.length; j++){
 						if (textParse[j] === "https" || textParse[j] === "http" || textParse[j] === "RT"){
 							flag = true;
 							break;
@@ -21,14 +27,20 @@
 					}
  					if(response.statuses[i].retweeted === false && flag === false){
 						var output = "<p> "+ response.statuses[i].user.name + " tweeted: ";
-						for (var j = 0; j<textParse.length; j++){
-							if (textParse[j][0]==="#")
+						for (var j = 0; j < textParse.length; j++){
+							if (textParse[j][0]==="#"){
 								output += (" <span class='hashtag'>"+textParse[j]+"</span>");
-							else if (textParse[j][0]==="@")
+								console.log(textParse[j]);
+							}
+							else if (textParse[j][0]==="@"){
 								output += (" <span class='mention'>"+textParse[j]+"</span>");
+								console.log(textParse[j]);
+							}
+
 							else
 								output += (" " + textParse[j]);			
 						}
+						output+="</p>";
 						$("html").append(output);
 					}
 				}
