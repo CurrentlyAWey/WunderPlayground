@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Testing</title>
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<script>
+//Thinking about making divs colored in ways to represent light level, cloudiness, etc.
+			var info = {};
+			info.key="";
+			info.city = prompt("Enter your city","Manhattan");
+			info.state = prompt("Enter your state initials", "NY");
+			info.request = "http://cooper-union-weather-proxy.herokuapp.com/weather/"+info.state+"/"+info.city;
+			console.log(info);
+			$.getJSON(info.request, function(response){
+				console.log(response);
+				$("#location").html(response.current_observation.display_location.full);
+				$("#feelslike").append(" "+response.current_observation.feelslike_f+" " + "degrees Farenheit");
+				var clothing;
+				var rain=0;
+				if (parseInt(response.current_observation.precip_today_in) > 0)
+					rain=1;
+				else if (parseInt(response.current_observation.feelslike_f) > 85)
+					clothing="tank top or a sundress";
+				else if (parseInt(response.current_observation.feelslike_f) > 75)
+					clothing="short sleeves";
+				else if (parseInt(response.current_observation.feelslike_f) > 55)
+					clothing="pants and a windbreaker maybe";
+				else if (parseInt(response.current_observation.feelslike_f) > 35)
+					clothing="warm jacket";
+				else
+					clothing="snow jacket";
+				var str = "I would suggest wearing "+clothing +" ";
+				if (rain===1)
+					str += "and a rain jacket or umbrella";
+				$("#clothes").html(str);
+				
+     			 });
+			function getWeather() {
+				$.ajax({
+				type: 'GET',
+				dataType: 'json',
+				url: info.conditions,
+				success: function(response){
+					console.log(response);
+					}
+				});
+			}
+			
+		</script>
+	</head>
+	<body>
+<p>Displaying results for <span id="location"></span></p>
+<h2 id="feelslike"> It should feel like</h2>
+<h3 id="clothes"> </h3>
+	</body>
+
+</html>
+
+
